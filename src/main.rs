@@ -31,28 +31,28 @@ fn network_status(error_num: u64, args: &Arguments) {
             led_red.set_value(0)?;
             Ok(())
         }),
-        1 => led_red.with_exported(|| {
-            led_red.set_direction(Direction::Low)?;
+        1 => led_green.with_exported(|| {
+            led_green.set_direction(Direction::Low)?;
             let iterations = duration_ms / period_ms / 2;
             for _ in 0..iterations {
-                led_red.set_value(0)?;
+                led_green.set_value(0)?;
                 sleep(Duration::from_millis(period_ms));
-                led_red.set_value(1)?;
+                led_green.set_value(1)?;
                 sleep(Duration::from_millis(period_ms));
             }
-            led_red.set_value(0)?;
+            led_green.set_value(0)?;
             Ok(())
         }),
-        2 => led_red.with_exported(|| {
-            led_red.set_direction(Direction::Low)?;
+        2 => led_blue.with_exported(|| {
+            led_blue.set_direction(Direction::Low)?;
             let iterations = duration_ms / period_ms / 2;
             for _ in 0..iterations {
-                led_red.set_value(0)?;
+                led_blue.set_value(0)?;
                 sleep(Duration::from_millis(period_ms));
-                led_red.set_value(1)?;
+                led_blue.set_value(1)?;
                 sleep(Duration::from_millis(period_ms));
             }
-            led_red.set_value(0)?;
+            led_blue.set_value(0)?;
             Ok(())
         }),
         _ => Ok(()),
