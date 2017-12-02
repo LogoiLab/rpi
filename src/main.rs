@@ -16,7 +16,7 @@ fn network_status(error_num: u64, args: &Arguments) {
     let led_red = Pin::new(args.pin_red);
     let led_green = Pin::new(args.pin_green);
     let led_blue = Pin::new(args.pin_blue);
-    let duration_ms = 100000;
+    let duration_ms = 10000;
     let period_ms = 1000;
     match error_num {
         0 => led_red.with_exported(|| {
