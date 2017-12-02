@@ -16,25 +16,20 @@ fn network_status(error_num: u64, args: &Arguments) {
     let led_red = Pin::new(args.pin_red);
     let led_green = Pin::new(args.pin_green);
     let led_blue = Pin::new(args.pin_blue);
-
-    let res: Result<(),sysfs_gpio::Error> = match error_num {
-        0 => {led_green.with_exported(|| {
-                led_green.set_direction(Direction::Low)?;
-                led_green.set_value(1)?;
-                Ok(())
-            });Ok(())},
-        1 => {led_red.with_exported(|| {
-                led_red.set_direction(Direction::Low)?;
-                led_red.set_value(1)?;
-                Ok(())
-            });Ok(())},
-        3 => {led_blue.with_exported(|| {
-                led_blue.set_direction(Direction::Low)?;
-                led_blue.set_value(1)?;
-                Ok(())
-            });Ok(())},
-        _ => {Ok(())},
-    };
+    let res = led_red.with_exported(|| {
+        let period_ms = 100;
+        let duration_ms = 999999999;
+        led_red.set_direction(Direction::Low)?;
+        let iterations = duration_ms / period_ms / 2;
+        for _ in 0..iterations {
+            led_red.set_value(0)?;
+            sleep(Duration::from_millis(period_ms));
+            led_red.set_value(1)?;
+            sleep(Duration::from_millis(period_ms));
+        }
+        led_red.set_value(0)?;
+        Ok(())
+});
 }
 
 fn main() {
