@@ -16,21 +16,7 @@ fn network_status(error_num: u64, args: &Arguments) {
     let led_red = Pin::new(args.pin_red);
     let led_green = Pin::new(args.pin_green);
     let led_blue = Pin::new(args.pin_blue);
-    led_red.with_exported(|| {
-        led_red.set_direction(Direction::Low)?;
-        led_red.set_value(0)?;
-        Ok(())
-    });
-    led_green.with_exported(|| {
-        led_green.set_direction(Direction::Low)?;
-        led_green.set_value(0)?;
-        Ok(())
-    });
-    led_blue.with_exported(|| {
-        led_blue.set_direction(Direction::Low)?;
-        led_blue.set_value(0)?;
-        Ok(())
-    });
+
     let res: Result<(),sysfs_gpio::Error> = match error_num {
         0 => {led_green.with_exported(|| {
                 led_green.set_direction(Direction::Low)?;
